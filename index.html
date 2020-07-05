@@ -138,6 +138,10 @@
     <img class="logo" src="tysnxu.svg" height="50px" >
     
     <script>
+        function getColor(grade) {
+            if (grade > 85) {return "#00cf37"} else if (grade > 75) {return "#3c8f00"} else if (grade > 65) {return "#aac20c"} else if (grade > 50) {return "#c2730c"} else {return "#c20c0c"}
+        }
+
         function sum_calculate() {
             var sum = 0
             all_grades = document.getElementsByClassName("grade_label")
@@ -166,6 +170,7 @@
                 alert("Ooops.. \n\nThe sum of percentage is larger than 100?\n Please check it!")
             }
             document.getElementById("total_sum").innerText = "The total is " + sum.toFixed(2) + ", which is " + percentage_sum.toFixed(0) + "% of the final grade."
+            document.getElementById("total_sum").setAttribute("Style", ("background: " + getColor((sum/percentage_sum)*100)))
         }
         
         function checkValid(row) {            
@@ -194,6 +199,9 @@
             var result = parseFloat(num1) / parseFloat(num2) * num3
             
             document.getElementsByClassName("grade_label")[row].innerText = result.toFixed(2)
+            document.getElementsByClassName("grade_label")[row].setAttribute("style", ("background: " + getColor(parseFloat(num1) / parseFloat(num2)*100)))
+
+
             sum_calculate()
             
             calc_func = "Calculate(" + (row) + ")"
