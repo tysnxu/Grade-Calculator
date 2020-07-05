@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Grade Calculator by tysnxu</title>
     <style>
         @font-face {
             font-family: "NBInternationalBold";
@@ -122,7 +122,7 @@
         <div class="hint"></div>
         <div class="hint">Your Grade</div>
         <div class="hint">Maximum Grade (100)</div>
-        <div class="hint">Percentage (%)</div>
+        <div class="hint">Assessment Percentage (%)</div>
         <div class="hint">Calculated Grade</div>
 
         <div class="row_label">A1</div>
@@ -132,10 +132,10 @@
         <div class="grade_label">← Fill First</div>
     </div>
 
-    <div onclick="addRow()" class="add_row_div">Add Row (Assessment)</div>
+    <div onclick="addRow()" class="add_row_div">Add Row (or Assessment)</div>
     <div id="total_sum">Total Sum</div>
 
-    <img class="logo" src="tysnxu.svg" height="50x" >
+    <img class="logo" src="tysnxu.svg" height="50px" >
     
     <script>
         function sum_calculate() {
@@ -162,6 +162,9 @@
                 // console.log(all_grades[i])
             }
             // console.log(sum)
+            if (percentage_sum > 100) {
+                alert("Ooops.. \n\nThe sum of percentage is larger than 100?\n Please check it!")
+            }
             document.getElementById("total_sum").innerText = "The total is " + sum.toFixed(2) + ", which is " + percentage_sum.toFixed(0) + "% of the final grade."
         }
         
@@ -170,6 +173,10 @@
             var num2 = document.getElementsByClassName("max_grade")[row].value.replace("%", "").replace("-", "")
             var num3 = document.getElementsByClassName("percentage_grade")[row].value.replace("%", "").replace("-", "")
 
+            if (num2 == "") {
+                document.getElementsByClassName("max_grade")[row].value = 100
+                num2 = 100
+            }
 
             if (Number(num2) < Number(num1)) {
                 alert("Ooops! \nThe maximum number should be higher than your grade!\n\nI have changed the number to 100.")
