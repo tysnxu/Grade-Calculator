@@ -94,6 +94,17 @@
             padding: 20px;
         }
 
+        #grade_abbrev{
+            margin: 20px;
+            width: 50px;
+            justify-content: center;
+            background: rgb(37, 37, 37);
+            font-family: NBInternationalBold;
+            font-size: 2em;
+            color: #eee;
+            padding: 20px;
+        }
+
         .add_row_div{
             background: rgb(37, 37, 37);
             font-family: NBInternationalBold;
@@ -134,12 +145,17 @@
 
     <div onclick="addRow()" class="add_row_div">Add Row (or Assessment)</div>
     <div id="total_sum">Total Sum</div>
+    <div id="grade_abbrev"></div>
 
     <img class="logo" src="tysnxu.svg" height="50px" >
     
     <script>
+        function getGradeAbrev(grade) {
+            if (grade >= 85) {return "HD"} else if (grade >= 75) {return "D"} else if (grade >= 65) {return "C"} else if (grade >= 50) {return "P"} else {return "F"}
+        }
         function getColor(grade) {
-            if (grade > 85) {return "#00cf37"} else if (grade > 75) {return "#3c8f00"} else if (grade > 65) {return "#aac20c"} else if (grade > 50) {return "#c2730c"} else {return "#c20c0c"}
+            console.log(grade)
+            if (grade >= 85) {return "#00cf37"} else if (grade >= 75) {return "#3c8f00"} else if (grade >= 65) {return "#aac20c"} else if (grade >= 50) {return "#c2730c"} else {return "#c20c0c"}
         }
 
         function sum_calculate() {
@@ -171,6 +187,7 @@
             }
             document.getElementById("total_sum").innerText = "The total is " + sum.toFixed(2) + ", which is " + percentage_sum.toFixed(0) + "% of the final grade."
             document.getElementById("total_sum").setAttribute("Style", ("background: " + getColor((sum/percentage_sum)*100)))
+            document.getElementById("grade_abbrev").innerText = getGradeAbrev((sum/percentage_sum)*100)
         }
         
         function checkValid(row) {            
@@ -200,7 +217,6 @@
             
             document.getElementsByClassName("grade_label")[row].innerText = result.toFixed(2)
             document.getElementsByClassName("grade_label")[row].setAttribute("style", ("background: " + getColor(parseFloat(num1) / parseFloat(num2)*100)))
-
 
             sum_calculate()
             
