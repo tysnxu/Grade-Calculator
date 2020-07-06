@@ -1,0 +1,226 @@
+@font-face {
+    font-family: "NBInternationalBold";
+    src: url("fonts/nb_international_pro_bold-webfont.woff2") format('woff2');
+    font-style: bold;
+}
+
+@font-face {
+    font-family: "NBInternational";
+    src: url("fonts/nb_international_pro_regular-webfont.woff2") format('woff2');
+    font-style: normal;
+}
+
+body{
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+#h1 {
+    justify-self: center;
+    font-family: NBInternationalBold;
+    font-size: 3em;
+    padding: 20px;
+    color: rgb(37, 37, 37);
+    margin-bottom: 0px;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: .5em;
+    grid-auto-rows: minmax(80px, auto);
+    padding: 20px;
+}
+
+#main_grid{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.wrapper > div {
+    padding: 1em;
+}
+
+.input_field{
+    align-content: start;
+    min-width: 100px;
+    font-family: NBInternational;
+    background: #eee;
+    font-size: 1.5em;
+    padding-left: 20px;
+    border: 0px;
+}
+
+
+.row_label{
+    align-content: stretch;
+    font-family: NBInternationalBold;
+    background: rgb(37, 37, 37);
+    color: #eee;
+    font-size: 1.5em;
+    padding-left: 20px;
+}
+
+.grade_label{
+    align-content: stretch;
+    font-family: NBInternationalBold;
+    background: rgb(37, 37, 37);
+    color: #eee;
+    font-size: 1.5em;
+    padding-left: 20px;
+}
+
+.hint{
+    color:rgb(37, 37, 37);
+    justify-self: start;
+    align-self: end;
+    font-family: NBInternationalBold;
+    font-size: 1em;
+}
+
+#total_sum{
+    margin: 20px;
+    background: rgb(37, 37, 37);
+    font-family: NBInternationalBold;
+    font-size: 2em;
+    color: #eee;
+    padding: 20px;
+}
+
+#grade_abbrev{
+    margin: 20px;
+    width: 50px;
+    justify-content: center;
+    background: rgb(37, 37, 37);
+    font-family: NBInternationalBold;
+    font-size: 2em;
+    color: #eee;
+    padding: 20px;
+}
+
+.add_row_div{
+    background: rgb(37, 37, 37);
+    font-family: NBInternationalBold;
+    font-size: 2em;
+    margin: 20px;
+    padding: 20px;
+    color: #eee;
+}
+
+.add_row_div:hover {
+    background: rgb(99, 99, 99);
+    cursor:pointer;
+}
+
+.logo{
+    margin: 20px;
+    margin-top: 100px;
+    height: 50px;
+}
+
+#what_if{
+    margin: 20px;
+    justify-content: center;
+    background: rgb(37, 37, 37);
+    font-family: NBInternationalBold;
+    font-size: 2em;
+    color: #eee;
+    padding: 20px;
+}
+
+.what_if_text {
+    font-family: NBInternational;
+}
+
+.whatif_chart{
+    display: grid;
+    margin: 20px;
+    height: 60px;
+    background: rgb(37, 37, 37);
+    margin-bottom: 10px;
+    padding: 5px 0px;
+}
+
+.whatif_chart > div{
+    background: white;
+    font-family: NBInternational;
+    color: black;
+    text-align: center;
+    font-size: 2em;
+    padding-top: 12px;
+}
+
+.whatif_chart > div:nth-child(even){
+    background: #eee;
+}
+
+#selected_whatif_holder{
+    font-size: 16pt;
+}
+
+
+.whatif_grade_wrapper{
+    display: grid;
+    grid-template-columns: 50% 15% 10% 10% 15%;
+    grid-auto-rows: minmax(80px, auto);
+    margin: 20px;
+    margin-top: 0px;
+}
+
+.whatif_grade_wrapper > div{
+    text-align: left;
+    font-family: NBInternational;
+    height: 25px;
+    padding: 10px;
+}
+
+
+#selected_whatif{
+    display: grid;
+    grid-template-columns: 50% 15% 10% 10% 15%;
+}
+
+
+.whatif_incell_color{
+    margin-top: 10px;
+    height: 14px;
+    width: 100%;
+}
+
+
+@media (orientation: portrait), (max-width: 800px) {
+    body {
+        padding: 5px;
+    }
+
+    #main_grid{
+        padding: 0px;
+    }
+    
+    .add_row_div{
+        margin: 0px;
+        margin-top: 30px;
+    }
+    
+    #total_sum{
+        margin: 0px;
+        margin-top: 30px;
+    }
+    
+    #grade_abbrev{
+        margin: 0px;
+        margin-top: 30px;
+    }
+    
+    #what_if{
+        margin: 0px;
+        margin-top: 30px;
+    }
+
+    .logo{
+        margin: 20px;
+        margin-top: 200px;
+        height: 35px;
+    }
+
+}
