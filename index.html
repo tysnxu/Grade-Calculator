@@ -4,132 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grade Calculator by tysnxu</title>
-    <style>
-        @font-face {
-            font-family: "NBInternationalBold";
-            src: url("fonts/nb_international_pro_bold-webfont.woff2") format('woff2');
-            font-style: bold;
-        }
-        
-        @font-face {
-            font-family: "NBInternational";
-            src: url("fonts/nb_international_pro_regular-webfont.woff2") format('woff2');
-            font-style: normal;
-        }
-        
-        body{
-            padding-left: 10%;
-            padding-right: 10%;
-        }
-
-        #h1 {
-            justify-self: center;
-            font-family: NBInternationalBold;
-            font-size: 3em;
-            padding: 20px;
-            color: rgb(37, 37, 37);
-            margin-bottom: 0px;
-        }
-        
-        .wrapper {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            grid-gap: .5em;
-            grid-auto-rows: minmax(80px, auto);
-            padding: 20px;
-        }
-
-        #main_grid{
-            padding-top: 0px;
-            padding-bottom: 0px;
-        }
-
-        .wrapper > div {
-            padding: 1em;
-        }
-
-        .input_field{
-            align-content: start;
-            min-width: 100px;
-            font-family: NBInternational;
-            background: #eee;
-            font-size: 1.5em;
-            padding-left: 20px;
-            border: 0px;
-        }
-
-
-        .row_label{
-            align-content: stretch;
-            font-family: NBInternationalBold;
-            background: rgb(37, 37, 37);
-            color: #eee;
-            font-size: 1.5em;
-            padding-left: 20px;
-        }
-        
-        .grade_label{
-            align-content: stretch;
-            font-family: NBInternationalBold;
-            background: rgb(37, 37, 37);
-            color: #eee;
-            font-size: 1.5em;
-            padding-left: 20px;
-        }
-
-        .hint{
-            color:rgb(37, 37, 37);
-            justify-self: start;
-            align-self: end;
-            font-family: NBInternationalBold;
-            font-size: 1em;
-        }
-
-        #total_sum{
-            margin: 20px;
-            background: rgb(37, 37, 37);
-            font-family: NBInternationalBold;
-            font-size: 2em;
-            color: #eee;
-            padding: 20px;
-        }
-
-        #grade_abbrev{
-            margin: 20px;
-            width: 50px;
-            justify-content: center;
-            background: rgb(37, 37, 37);
-            font-family: NBInternationalBold;
-            font-size: 2em;
-            color: #eee;
-            padding: 20px;
-        }
-
-        .add_row_div{
-            background: rgb(37, 37, 37);
-            font-family: NBInternationalBold;
-            font-size: 2em;
-            margin: 20px;
-            padding: 20px;
-            color: #eee;
-        }
-
-        .add_row_div:hover {
-            background: rgb(99, 99, 99);
-            cursor:pointer;
-        }
-
-        .logo{
-            margin: 20px;
-            margin-top: 100px;
-        }
-
-        @media (orientation: portrait) {
-            body {
-                padding: 0px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -152,122 +28,29 @@
     <div onclick="addRow()" class="add_row_div">Add Row (or Assessment)</div>
     <div id="total_sum">Total Sum</div>
     <div id="grade_abbrev"></div>
-
-    <img class="logo" src="tysnxu.svg" height="50px" >
+    <div style="display: none;" id="what_if">
+        <div id="whatif_title">What If ... </div><br>
+        <div id="whatif_HD" class="what_if_text">A2 -> HD | Final -> 18.4</div>
+        <div id="whatif_D" class="what_if_text">A2 -> D | Final -> 18.4</div>
+        <div id="whatif_C" class="what_if_text">A2 -> C | Final -> 18.4</div>
+        <div id="whatif_P" class="what_if_text">A2 -> P | Final -> 18.4</div>
+    </div>
     
-    <script>
-        function getGradeAbrev(grade) {
-            if (grade >= 85) {return "HD"} else if (grade >= 75) {return "D"} else if (grade >= 65) {return "C"} else if (grade >= 50) {return "P"} else {return "F"}
-        }
-        function getColor(grade) {
-            console.log(grade)
-            if (grade >= 85) {return "#00cf37"} else if (grade >= 75) {return "#3c8f00"} else if (grade >= 65) {return "#aac20c"} else if (grade >= 50) {return "#c2730c"} else {return "#c20c0c"}
-        }
+    <div style="display: none;" id="whatif_main_holder">
+        <div style="grid-template-columns: 30% 30% 40%;" class="whatif_chart">
 
-        function sum_calculate() {
-            var sum = 0
-            all_grades = document.getElementsByClassName("grade_label")
-            for (i=0;i<all_grades.length;i++) {
-                if (isNaN(all_grades[i].innerText)) {
-                    console.log("Skipping " + all_grades[i].innerText)
-                } else {
-                sum += parseFloat(all_grades[i].innerText)
-                }
-                
-                // console.log(all_grades[i])
-            }
-            // console.log(sum)
-            
-            var percentage_sum = 0
-            all_percentage = document.getElementsByClassName("percentage_grade")
-            for (i=0;i<all_percentage.length;i++) {
-                current_percentage = all_percentage[i].value
-                if (current_percentage == "") {
-                    console.log("Skipping " + current_percentage)
-                } else {percentage_sum += parseFloat(current_percentage)}
-                // console.log(all_grades[i])
-            }
-            // console.log(sum)
-            if (percentage_sum > 100) {
-                alert("Ooops.. \n\nThe sum of percentage is larger than 100?\n Please check it!")
-            }
-            document.getElementById("total_sum").innerText = "The total is " + sum.toFixed(2) + ", which is " + percentage_sum.toFixed(0) + "% of the final grade."
-            document.getElementById("total_sum").setAttribute("Style", ("background: " + getColor((sum/percentage_sum)*100)))
-            document.getElementById("grade_abbrev").innerText = getGradeAbrev((sum/percentage_sum)*100)
-        }
-        
-        function checkValid(row) {            
-            var num1 = document.getElementsByClassName("your_grade")[row].value.replace("%", "")
-            var num2 = document.getElementsByClassName("max_grade")[row].value.replace("%", "").replace("-", "")
-            var num3 = document.getElementsByClassName("percentage_grade")[row].value.replace("%", "").replace("-", "")
-
-            if (num2 == "") {
-                document.getElementsByClassName("max_grade")[row].value = 100
-                num2 = 100
-            }
-
-            if (Number(num2) < Number(num1)) {
-                alert("Ooops! \nThe maximum number should be higher than your grade!\n\nI have changed the number to 100.")
-                document.getElementsByClassName("max_grade")[row].value = 100
-            }
-            
-        }
-
-        function Calculate(row) {
-            checkValid(row)
-            var num1 = document.getElementsByClassName("your_grade")[row].value.replace("%", "")
-            var num2 = document.getElementsByClassName("max_grade")[row].value.replace("%", "").replace("-", "")
-            var num3 = document.getElementsByClassName("percentage_grade")[row].value.replace("%", "").replace("-", "")
-
-            var result = parseFloat(num1) / parseFloat(num2) * num3
-            
-            document.getElementsByClassName("grade_label")[row].innerText = result.toFixed(2)
-            document.getElementsByClassName("grade_label")[row].setAttribute("style", ("background: " + getColor(parseFloat(num1) / parseFloat(num2)*100)))
-
-            sum_calculate()
-            
-            calc_func = "Calculate(" + (row) + ")"
-            document.getElementsByClassName("your_grade")[row].setAttribute("onchange", calc_func)
-            document.getElementsByClassName("max_grade")[row].setAttribute("onchange", calc_func)
-        }
-
-        function addRow() {
-            row_number = document.getElementsByClassName("row_label").length + 1
-            calc_func = "Calculate(" + document.getElementsByClassName("row_label").length + ")"
-            var div = document.createElement('div');
-            div.setAttribute('class', 'row_label');
-            div.innerHTML = "A" + row_number;
-            document.getElementById('main_grid').appendChild(div);
-
-            var div = document.createElement('input');
-            div.setAttribute('class', 'input_field your_grade');
-            div.setAttribute('type', ' text');
-            div.setAttribute('autocomplete', 'off');
-            div.setAttribute('placeholder', 'I got ...');
-            document.getElementById('main_grid').appendChild(div);
-
-            var div = document.createElement('input');
-            div.setAttribute('class', 'input_field max_grade');
-            div.setAttribute('type', ' text');
-            div.setAttribute('autocomplete', 'off');
-            div.setAttribute('placeholder', 'Out of ...');
-            document.getElementById('main_grid').appendChild(div);
-
-            var div = document.createElement('input');
-            div.setAttribute('onchange', calc_func);
-            div.setAttribute('class', 'input_field percentage_grade');
-            div.setAttribute('type', ' text');
-            div.setAttribute('autocomplete', 'off');
-            div.setAttribute('placeholder', 'is ...% of final mark');
-            document.getElementById('main_grid').appendChild(div);
-            
-            var div = document.createElement('div');
-            div.setAttribute('class', 'grade_label');
-            div.innerHTML = "← Fill First";
-            document.getElementById('main_grid').appendChild(div);
-        }
+        </div>
+    
+        <div class="whatif_grade_wrapper">
+            <div style="border-top: 5px solid #c20c0c;">F</div>
+            <div style="border-top: 5px solid #c2730c;">P</div>
+            <div style="border-top: 5px solid #aac20c;">C</div>
+            <div style="border-top: 5px solid #3c8f00;">D</div>
+            <div style="border-top: 5px solid #00cf37;">HD</div>
+        </div>
+    </div>
 
 
-    </script>
+    <img class="logo" src="tysnxu.svg">
 </body>
 </html>
