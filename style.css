@@ -245,4 +245,18 @@ body{
         height: 35px;
     }
 
+    .constant_visual_chart{
+        margin: 0px;
+        margin-top: 20px;
+    }
+
+    .whatif_chart{
+        margin: 0px;
+        margin-top: 20px;
+
+    }
+    
+    .whatif_grade_wrapper{
+        margin: 0px;
+    }
 }
