@@ -11,6 +11,8 @@ function configWhatIfChart(row) {
         resetWhatIfChart()
     }
     document.getElementById("whatif_main_holder").setAttribute("style", "display: block;")
+    
+    document.getElementById("h1").innerText = "Grade Calculator > WhatIf ?!"
     all_percentage = document.getElementsByClassName("percentage_grade")
     segments_count = 0
     percentage_array = []
@@ -61,7 +63,6 @@ function configWhatIfChart(row) {
     div.setAttribute("class", "whatif_incell_color")
     document.getElementById('selected_whatif').appendChild(div);
 
-
     var div = document.createElement('div');
     div.setAttribute("style", "background: #00cf37;")
     div.setAttribute("class", "whatif_incell_color")
@@ -97,8 +98,6 @@ function sum_calculate() {
         } else {
         sum += parseFloat(all_grades[i].innerText)
         }
-        
-        // console.log(all_grades[i])
     }
     // console.log(sum)
     
@@ -113,7 +112,7 @@ function sum_calculate() {
     }
     // console.log(sum)
     if (percentage_sum > 100) {
-        alert("Ooops.. \n\nThe sum of percentage is larger than 100?\n Please check it!")
+        alert("Ooops.. \n\nThe sum of percentage is larger than 100?\nPlease check!")
     }
     document.getElementById("total_sum").innerText = "The total is " + sum.toFixed(2) + ", which is " + percentage_sum.toFixed(0) + "% of the final grade."
     document.getElementById("total_sum").setAttribute("Style", ("background: " + getColor((sum/percentage_sum)*100)))
@@ -144,6 +143,7 @@ function checkValid(row) {
 }
 
 function whatIf(row) {
+    document.getElementById("constant_visual_section").setAttribute("style", "display: none")
     if (document.getElementById("whatif_active")) {
         whatif_row = document.getElementById("whatif_active").getAttribute("row")
         if (whatif_row == row) {
@@ -167,6 +167,8 @@ function whatIf(row) {
     }
     
     document.getElementById("what_if").setAttribute("style", "display: block")
+    document.getElementById("h1").innerText = "Grade Calculator > WhatIf ?!"
+
     document.getElementsByClassName("grade_label")[row].innerText = 0
     document.getElementsByClassName("your_grade")[row].setAttribute("id","whatif_active")
     document.getElementsByClassName("your_grade")[row].setAttribute("row", row)
@@ -198,10 +200,12 @@ function whatIf(row) {
     }
     // A2 -> HD | Final -> 18.4
     document.getElementById('whatif_title').innerText = "What if " + assessment_name + " is ..."
-    document.getElementById("whatif_HD").innerText = "HD (" + num2 + " ~ " + (0.85*num2).toFixed(1) + ") | Final -> " + ((Number(sum_others)+Number(parseFloat(num3*0.85))).toFixed(1) + " / " + percentage_sum + " ( " + getGradeAbrev(((sum_others+parseFloat(num3*0.85))/percentage_sum*100)) + " )")
-    document.getElementById("whatif_D").innerText = "D (" + (0.85*num2).toFixed(1) + " ~ " + (0.75*num2).toFixed(1) + ") | Final -> " + ((Number(sum_others)+Number(parseFloat(num3*0.75))).toFixed(1) + " / " + percentage_sum + " ( " + getGradeAbrev(((sum_others+parseFloat(num3*0.75))/percentage_sum*100)) + " )")
-    document.getElementById("whatif_C").innerText = "C (" + (0.75*num2).toFixed(1) + " ~ " + (0.65*num2).toFixed(1) + ") | Final -> " + ((Number(sum_others)+Number(parseFloat(num3*0.65))).toFixed(1) + " / " + percentage_sum + " ( " + getGradeAbrev(((sum_others+parseFloat(num3*0.65))/percentage_sum*100)) + " )")
-    document.getElementById("whatif_P").innerText = "P (" + (0.65*num2).toFixed(1) + " ~ " + (0.5*num2).toFixed(1) + ") | Final -> " + ((Number(sum_others)+Number(parseFloat(num3*0.50))).toFixed(1) + " / " + percentage_sum + " ( " + getGradeAbrev(((sum_others+parseFloat(num3*0.50))/percentage_sum*100)) + " )")
+    document.getElementById("whatif_100").innerText = "100 (" + num2 + ") | Final -> " + ((Number(sum_others)+Number(parseFloat(num3))).toFixed(1) + " / " + percentage_sum + " ( " + getGradeAbrev(((sum_others+parseFloat(num3))/percentage_sum*100)) + " )")
+    document.getElementById("whatif_HD").innerText = "HD ("+ (0.85*num2).toFixed(1) + ") | Final -> " + ((Number(sum_others)+Number(parseFloat(num3*0.85))).toFixed(1) + " / " + percentage_sum + " ( " + getGradeAbrev(((sum_others+parseFloat(num3*0.85))/percentage_sum*100)) + " )")
+    document.getElementById("whatif_D").innerText = "D (" + (0.75*num2).toFixed(1) + ") | Final -> " + ((Number(sum_others)+Number(parseFloat(num3*0.75))).toFixed(1) + " / " + percentage_sum + " ( " + getGradeAbrev(((sum_others+parseFloat(num3*0.75))/percentage_sum*100)) + " )")
+    document.getElementById("whatif_C").innerText = "C (" + (0.65*num2).toFixed(1) + ") | Final -> " + ((Number(sum_others)+Number(parseFloat(num3*0.65))).toFixed(1) + " / " + percentage_sum + " ( " + getGradeAbrev(((sum_others+parseFloat(num3*0.65))/percentage_sum*100)) + " )")
+    document.getElementById("whatif_P").innerText = "P (" + (0.5*num2).toFixed(1) + ") | Final -> " + ((Number(sum_others)+Number(parseFloat(num3*0.50))).toFixed(1) + " / " + percentage_sum + " ( " + getGradeAbrev(((sum_others+parseFloat(num3*0.50))/percentage_sum*100)) + " )")
+    document.getElementById("whatif_F").innerText = "0 (0) | Final -> " + ((Number(sum_others)).toFixed(1) + " / " + percentage_sum + " ( " + getGradeAbrev(((sum_others)/percentage_sum*100)) + " )")
     configWhatIfChart(row)
 }
 
@@ -231,8 +235,9 @@ function Calculate(row) {
         calc_func = "Calculate(" + (row) + ")"
         document.getElementsByClassName("your_grade")[row].setAttribute("onchange", calc_func)
         document.getElementsByClassName("max_grade")[row].setAttribute("onchange", calc_func)
+        updateConstantChart()
             
-    if (num1 == "?" || num1 == "*" || num1 == "#" || num1 == "!" || num1 == "x" || num1 == "@" || num1.toLowerCase().replace(" ", "") == "whatif") {
+    if (num1 == "?" || num1 == "*" || num1 == "#" || num1 == "!" || num1.toLowerCase() == "x" || num1 == "@" || num1.toLowerCase().replace(" ", "") == "whatif") {
         document.getElementsByClassName("your_grade")[row].value = "What If"
         whatIf(row)
         return false
@@ -241,12 +246,16 @@ function Calculate(row) {
         } else {
             document.getElementById("what_if").setAttribute("style", "display: none")
             document.getElementById("whatif_main_holder").setAttribute("style", "display: none")
+            document.getElementById("h1").innerText = "Grade Calculator"
+
         }
     }
 
     calc_func = "Calculate(" + (row) + ")"
     document.getElementsByClassName("your_grade")[row].setAttribute("onchange", calc_func)
     document.getElementsByClassName("max_grade")[row].setAttribute("onchange", calc_func)
+
+
 }
 }
 
@@ -284,4 +293,51 @@ function addRow() {
     div.setAttribute('class', 'grade_label');
     div.innerHTML = "← Fill First";
     document.getElementById('main_grid').appendChild(div);
+}
+
+function updateConstantChart() {
+    if (document.getElementById("whatif_active")) {
+        document.getElementById("constant_visual_section").setAttribute("style", "display: none")
+    } else {
+    document.getElementsByClassName('constant_visual_chart')[0].innerHTML = ""
+    console.log("update visual")
+    document.getElementById("constant_visual_section").setAttribute("style", "display: block")
+    document.getElementById("h1").innerText = "Grade Calculator > WhatIf ?!"
+
+    all_grade = document.getElementsByClassName("grade_label")
+
+    var percentage_array = []
+    var percentage_remain = 100
+    for (i=0;i<all_grade.length;i++) {
+        current_grade = all_grade[i].innerText
+        // console.log(current_grade)
+
+
+        if (current_grade != "← Fill First") {
+            percentage_array.push(parseFloat(current_grade))
+            percentage_remain -= parseFloat(current_grade)
+            // console.log(percentage_remain)
+            // console.log(percentage_array)
+
+            var div = document.createElement('div');
+            div.innerHTML = document.getElementsByClassName("row_label")[i].innerText;
+            document.getElementsByClassName('constant_visual_chart')[0].appendChild(div);
+        }
+    }
+        
+    if (percentage_remain != 0) {
+        percentage_array.push(percentage_remain)
+    }
+
+    // console.log(percentage_array)
+    grid_template = "grid-template-columns: "
+    for (i=0;i<percentage_array.length;i++) {
+        grid_template += percentage_array[i].toString()
+        // console.log(grid_template)
+        grid_template += "% "
+    }
+    console.log(grid_template)
+    document.getElementById("constant_visual_section").getElementsByClassName("constant_visual_chart")[0].setAttribute("style", grid_template)
+    }
+
 }
