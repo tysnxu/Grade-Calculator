@@ -25,17 +25,11 @@
         <div class="grade_label">← Fill First</div>
     </div>
 
+
     <div onclick="addRow()" class="add_row_div">Add Row (or Assessment)</div>
     <div id="total_sum">Total Sum</div>
     <div id="grade_abbrev"></div>
-    <div style="display: none;" id="what_if">
-        <div id="whatif_title">What If ... </div><br>
-        <div id="whatif_HD" class="what_if_text">A2 -> HD | Final -> 18.4</div>
-        <div id="whatif_D" class="what_if_text">A2 -> D | Final -> 18.4</div>
-        <div id="whatif_C" class="what_if_text">A2 -> C | Final -> 18.4</div>
-        <div id="whatif_P" class="what_if_text">A2 -> P | Final -> 18.4</div>
-    </div>
-    
+
     <div style="display: none;" id="whatif_main_holder">
         <div style="grid-template-columns: 30% 30% 40%;" class="whatif_chart">
 
@@ -50,6 +44,33 @@
         </div>
     </div>
 
+
+    <div style="display: none;" id="what_if">
+        <div id="whatif_title">What If ... </div><br>
+        <div id="whatif_100" class="what_if_text">A2 -> 100 | Final -> 18.4</div>
+        <div id="whatif_HD" class="what_if_text">A2 -> HD | Final -> 18.4</div>
+        <div id="whatif_D" class="what_if_text">A2 -> D | Final -> 18.4</div>
+        <div id="whatif_C" class="what_if_text">A2 -> C | Final -> 18.4</div>
+        <div id="whatif_P" class="what_if_text">A2 -> P | Final -> 18.4</div>
+        <div id="whatif_F" class="what_if_text">A2 -> 0 | Final -> 18.4</div>
+    </div>
+    
+
+
+
+    <div style="display: none;" id="constant_visual_section">
+        <div style="grid-template-columns: 30% 30% 40%;" class="constant_visual_chart">
+
+        </div>
+    
+        <div class="whatif_grade_wrapper">
+            <div style="border-top: 5px solid #c20c0c;">F</div>
+            <div style="border-top: 5px solid #c2730c;">P</div>
+            <div style="border-top: 5px solid #aac20c;">C</div>
+            <div style="border-top: 5px solid #3c8f00;">D</div>
+            <div style="border-top: 5px solid #00cf37;">HD</div>
+        </div>
+    </div>
 
     <img class="logo" src="tysnxu.svg">
 </body>
