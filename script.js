@@ -21,6 +21,8 @@ function configWhatIfChart(row) {
         if (i != row && current_percentage != "") {
             percentage_array.push(parseFloat(document.getElementsByClassName("grade_label")[i].innerText))
             percentage_remain -= parseFloat(document.getElementsByClassName("grade_label")[i].innerText)
+            // console.log(percentage_remain)
+            // console.log(percentage_array)
 
             var div = document.createElement('div');
             div.innerHTML = document.getElementsByClassName("row_label")[i].innerText;
@@ -79,8 +81,6 @@ function configWhatIfChart(row) {
     }
     console.log(grid_template)
     document.getElementById("whatif_main_holder").getElementsByClassName("whatif_chart")[0].setAttribute("style", grid_template)
-
-
 }
 
 function getColor(grade) {
@@ -140,26 +140,32 @@ function checkValid(row) {
         alert("Ooops! \nThe maximum number should be higher than your grade!\n\nI have changed the number to 100.")
         document.getElementsByClassName("max_grade")[row].value = 100
     }
-
-    if (num1 == "?" || num1 == "*" || num1 == "#" || num1 == "!" || num1 == "x" || num1 == "@" || num1.toLowerCase().replace(" ", "") == "whatif") {
-        document.getElementsByClassName("your_grade")[row].value = "What If"
-        whatIf(row)
-        return false
-    } else { 
-        if (document.getElementById("whatif_active")) { console.log("Keeping what if")
-        } else {document.getElementById("what_if").setAttribute("style", "display: none")
-        whatif_switch = false}
-
-}
     return true
 }
 
 function whatIf(row) {
-    // if (update == false) {
-    //     document.getElementById("whatif_active").value = document.getElementsByClassName("max_grade")[document.getElementById("whatif_active").getAttribute("row")].value
-    //     document.getElementById("whatif_active").removeAttribute("id")
-    // }
-    whatif_switch = true
+    if (document.getElementById("whatif_active")) {
+        whatif_row = document.getElementById("whatif_active").getAttribute("row")
+        if (whatif_row == row) {
+            var num1 = document.getElementsByClassName("your_grade")[whatif_row].value
+            var num2 = document.getElementsByClassName("max_grade")[whatif_row].value
+            var num3 = document.getElementsByClassName("percentage_grade")[whatif_row].value
+            document.getElementsByClassName("grade_label")[whatif_row].innerText = (parseFloat(num1) / parseFloat(num2) * num3).toFixed(2)
+            document.getElementsByClassName("grade_label")[whatif_row].setAttribute("style", ("background: " + getColor(parseFloat(whatif_row) / parseFloat(whatif_row)*100)))
+            sum_calculate()
+        } else {
+            document.getElementsByClassName("your_grade")[whatif_row].value = document.getElementsByClassName("max_grade")[whatif_row].value
+            document.getElementById("whatif_active").removeAttribute("id")
+            var num1 = document.getElementsByClassName("your_grade")[whatif_row].value
+            var num2 = document.getElementsByClassName("max_grade")[whatif_row].value
+            var num3 = document.getElementsByClassName("percentage_grade")[whatif_row].value
+            document.getElementsByClassName("grade_label")[whatif_row].innerText = (parseFloat(num1) / parseFloat(num2) * num3).toFixed(2)
+            document.getElementsByClassName("grade_label")[whatif_row].setAttribute("style", ("background: " + getColor(parseFloat(whatif_row) / parseFloat(whatif_row)*100)))
+            sum_calculate()
+        }
+
+    }
+    
     document.getElementById("what_if").setAttribute("style", "display: block")
     document.getElementsByClassName("grade_label")[row].innerText = 0
     document.getElementsByClassName("your_grade")[row].setAttribute("id","whatif_active")
@@ -199,7 +205,21 @@ function whatIf(row) {
     configWhatIfChart(row)
 }
 
+function calculate_only(row) {    
+    var num1 = document.getElementsByClassName("your_grade")[row].value
+    var num2 = document.getElementsByClassName("max_grade")[row].value
+    var num3 = document.getElementsByClassName("percentage_grade")[row].value
+    
+    document.getElementsByClassName("grade_label")[row].innerText = (parseFloat(num1) / parseFloat(num2) * num3).toFixed(2)
+    document.getElementsByClassName("grade_label")[row].setAttribute("style", ("background: " + getColor(parseFloat(num1) / parseFloat(num2)*100)))
+}
+
 function Calculate(row) {
+    if (document.getElementById("whatif_active") && document.getElementById("whatif_active").getAttribute("row") == row && num1 != "What If") {
+        document.getElementById("whatif_active").removeAttribute("id")
+        calculate_only(row)       
+
+    }
     if (checkValid(row)) {
         var num1 = document.getElementsByClassName("your_grade")[row].value.replace("%", "")
         var num2 = document.getElementsByClassName("max_grade")[row].value.replace("%", "").replace("-", "")
@@ -207,13 +227,27 @@ function Calculate(row) {
         document.getElementsByClassName("grade_label")[row].innerText = (parseFloat(num1) / parseFloat(num2) * num3).toFixed(2)
         document.getElementsByClassName("grade_label")[row].setAttribute("style", ("background: " + getColor(parseFloat(num1) / parseFloat(num2)*100)))
         sum_calculate()
+
+        calc_func = "Calculate(" + (row) + ")"
+        document.getElementsByClassName("your_grade")[row].setAttribute("onchange", calc_func)
+        document.getElementsByClassName("max_grade")[row].setAttribute("onchange", calc_func)
+            
+    if (num1 == "?" || num1 == "*" || num1 == "#" || num1 == "!" || num1 == "x" || num1 == "@" || num1.toLowerCase().replace(" ", "") == "whatif") {
+        document.getElementsByClassName("your_grade")[row].value = "What If"
+        whatIf(row)
+        return false
+    } else { 
+        if (document.getElementById("whatif_active")) {whatIf(document.getElementById("whatif_active").getAttribute("row"))
+        } else {
+            document.getElementById("what_if").setAttribute("style", "display: none")
+            document.getElementById("whatif_main_holder").setAttribute("style", "display: none")
+        }
     }
+
     calc_func = "Calculate(" + (row) + ")"
     document.getElementsByClassName("your_grade")[row].setAttribute("onchange", calc_func)
     document.getElementsByClassName("max_grade")[row].setAttribute("onchange", calc_func)
-    if (document.getElementById("whatif_active") && document.getElementById("whatif_active").getAttribute("row") != row) {
-        whatIf(document.getElementById("whatif_active").getAttribute("row"))
-    }
+}
 }
 
 function addRow() {
