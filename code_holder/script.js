@@ -9,7 +9,7 @@ function showHide(block_number) {
 
 function copyText(block_number) {
     var el = document.createElement('textarea');
-    el.value = document.getElementsByClassName("textbox")[block_number].innerText;
+    el.value = document.getElementsByClassName("textbox")[block_number].innerText.trim();
     document.body.appendChild(el);
     el.select();
     document.execCommand('copy');
