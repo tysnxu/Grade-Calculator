@@ -11,9 +11,11 @@ if (prev_cookie == "_tgcl=0") {
                 var prev_cookie = old_cookie_data[i].replace("_tgcl=", "").split(",").slice(0,-1)
                 if(prev_cookie != 0){            
                     if (prev_cookie.length % 3 === 0) {
-                    console.log("Valid Cookie")
-                    console.log(prev_cookie)
+                    // console.log("Valid Cookie")
+                    // console.log(prev_cookie)
                     reloadCookie(prev_cookie)
+                    sum_calculate()
+                    updateConstantChart()
                 }
             }
         }
@@ -34,9 +36,7 @@ function reloadCookie(prev_array) {
         document.getElementsByClassName("your_grade")[i].setAttribute("onchange", calc_func)
         document.getElementsByClassName("max_grade")[i].setAttribute("onchange", calc_func)
     }
-    // console.log("calculate123")
-
-
+    
 }
 
 function resetCookie() {
@@ -58,7 +58,7 @@ function configWhatIfChart(row) {
     }
     document.getElementById("whatif_main_holder").setAttribute("style", "display: block;")
     
-    document.getElementById("h1").innerText = "Grade Calculator > WhatIf ?!"
+    // document.getElementById("h1").innerText = "Grade Calculator > WhatIf ?!"
     all_percentage = document.getElementsByClassName("percentage_grade")
     segments_count = 0
     percentage_array = []
@@ -213,7 +213,7 @@ function whatIf(row) {
     }
     
     document.getElementById("what_if").setAttribute("style", "display: block")
-    document.getElementById("h1").innerText = "Grade Calculator > WhatIf ?!"
+    // document.getElementById("h1").innerText = "Grade Calculator > WhatIf ?!"
 
     document.getElementsByClassName("grade_label")[row].innerText = 0
     document.getElementsByClassName("your_grade")[row].setAttribute("id","whatif_active")
@@ -347,7 +347,7 @@ function updateConstantChart() {
     document.getElementsByClassName('constant_visual_chart')[0].innerHTML = ""
     console.log("update visual")
     document.getElementById("constant_visual_section").setAttribute("style", "display: block")
-    document.getElementById("h1").innerText = "Grade Calculator > WhatIf ?!"
+    // document.getElementById("h1").innerText = "Grade Calculator > WhatIf ?!"
 
     all_grade = document.getElementsByClassName("grade_label")
 
