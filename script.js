@@ -1,3 +1,49 @@
+// check cookie
+cookie_magic_word = "_tgcl"
+
+var prev_cookie = document.cookie
+if (prev_cookie == "_tgcl=0") {
+    console.log("No Cookies")
+} else {console.log("Cookie Detected")
+    old_cookie_data = prev_cookie.split(";")
+        for(i=0;i<old_cookie_data.length;i++){
+            if(old_cookie_data[i].includes(cookie_magic_word)) {
+                var prev_cookie = old_cookie_data[i].replace("_tgcl=", "").split(",").slice(0,-1)
+                if(prev_cookie != 0){            
+                    if (prev_cookie.length % 3 === 0) {
+                    console.log("Valid Cookie")
+                    console.log(prev_cookie)
+                    reloadCookie(prev_cookie)
+                }
+            }
+        }
+    }
+}
+
+function reloadCookie(prev_array) {
+    rows_toadd = prev_array.length / 3 - 1
+    for (i=0;i<rows_toadd;i++) {addRow()}
+    for (i=0;i<prev_array.length;i++) {
+        document.getElementsByClassName("input_field")[i].value = prev_array[i].trim()
+    }
+    rows_to_calculate = prev_array.length / 3
+    console.log(rows_to_calculate)
+    for (i=0;i<rows_to_calculate;i++) {
+        calculate_only(i)
+        calc_func = "Calculate(" + (i) + ")"
+        document.getElementsByClassName("your_grade")[i].setAttribute("onchange", calc_func)
+        document.getElementsByClassName("max_grade")[i].setAttribute("onchange", calc_func)
+    }
+    // console.log("calculate123")
+
+
+}
+
+function resetCookie() {
+    document.cookie = "_tgcl=0"
+    location.reload()
+}
+
 function getGradeAbrev(grade) {
     if (grade >= 85) {return "HD"} else if (grade >= 75) {return "D"} else if (grade >= 65) {return "C"} else if (grade >= 50) {return "P"} else {return "F"}
 }
@@ -254,8 +300,7 @@ function Calculate(row) {
     calc_func = "Calculate(" + (row) + ")"
     document.getElementsByClassName("your_grade")[row].setAttribute("onchange", calc_func)
     document.getElementsByClassName("max_grade")[row].setAttribute("onchange", calc_func)
-
-
+    cookieSaveCurrent()
 }
 }
 
@@ -340,4 +385,17 @@ function updateConstantChart() {
     document.getElementById("constant_visual_section").getElementsByClassName("constant_visual_chart")[0].setAttribute("style", grid_template)
     }
 
+}
+
+function cookieSaveCurrent() {
+    // console.log("trigger cookie")
+    all_fields = document.getElementsByClassName("input_field");
+    // console.log(all_fields)
+    all_field_string = ""
+    for (i=0;i<all_fields.length;i++){
+        all_field_string += all_fields[i].value
+        all_field_string += ","
+    }
+    console.log(all_field_string)
+    document.cookie = cookie_magic_word + "=" + all_field_string
 }
