@@ -99,10 +99,11 @@ body{
 }
 
 #reset_grid{
-    width: auto;
+    text-align: center;
     margin: 20px;
+    width: 180px;
     justify-content: center;
-    background: rgb(37, 37, 37);
+    background: rgb(199, 0, 0);
     font-family: NBInternationalBold;
     font-size: 2em;
     color: #eee;
@@ -112,7 +113,7 @@ body{
 
 #reset_grid:hover{
 
-    background: rgb(99, 99, 99);
+    background: rgb(153, 0, 0);
 }
 
 .add_row_div{
