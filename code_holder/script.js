@@ -7,8 +7,6 @@ function showHide(block_number) {
     }
 }
 
-// var b = ||1dli3oVPkMfk7HzYbEUPNQ==||
-
 function copyText(block_number) {
     var el = document.createElement('textarea');
     el.value = document.getElementsByClassName("textbox")[block_number].innerText.trim();
