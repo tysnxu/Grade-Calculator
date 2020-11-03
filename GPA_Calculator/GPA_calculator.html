@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <h1 id="h1">GPA Calculator</h1>
+    <div id="main_grid" class="wrapper">
+        <div class="row_label">HD - 7</div>
+        <input onchange="CalculateAll()" id="HD_count" class="input_field" type="text" autocomplete="off" placeholder="×  how many">
+        <div onclick="countAddSubtract('+', 0)" class="arrow_holder"><i class="arrow-up"></i></div>
+        <div onclick="countAddSubtract('-', 0)" class="arrow_holder"><i class="arrow-down"></i></div>
+        <div class="row_label">D - 6</div>
+        <input onchange="CalculateAll()" id="D_count" class="input_field" type="text" autocomplete="off" placeholder="×  how many">
+        <div onclick="countAddSubtract('+', 1)" class="arrow_holder"><i class="arrow-up"></i></div>
+        <div onclick="countAddSubtract('-', 1)" class="arrow_holder"><i class="arrow-down"></i></div>
+        <div class="row_label">C - 5</div>
+        <input onchange="CalculateAll()" id="C_count" class="input_field" type="text" autocomplete="off" placeholder="×  how many">
+        <div onclick="countAddSubtract('+', 2)" class="arrow_holder"><i class="arrow-up"></i></div>
+        <div onclick="countAddSubtract('-', 2)" class="arrow_holder"><i class="arrow-down"></i></div>
+        <div class="row_label">P - 4</div>
+        <input onchange="CalculateAll()" id="P_count" class="input_field" type="text" autocomplete="off" placeholder="×  how many">
+        <div onclick="countAddSubtract('+', 3)" class="arrow_holder"><i class="arrow-up"></i></div>
+        <div onclick="countAddSubtract('-', 3)" class="arrow_holder"><i class="arrow-down"></i></div>
+        <div class="row_label">F - 0</div>
+        <input onchange="CalculateAll()" id="F_count" class="input_field" type="text" autocomplete="off" placeholder="×  how many">
+        <div onclick="countAddSubtract('+', 4)" class="arrow_holder"><i class="arrow-up"></i></div>
+        <div onclick="countAddSubtract('-', 4)" class="arrow_holder"><i class="arrow-down"></i></div>
+    </div>
+    <div onclick="CalculateAll()" id="total_sum">Average GPA</div>
+
+    <div onclick="triggerGuessGPA()" class="black_block button" id="guess-gpa-trigger">* Guess GPA</div>
+
+    <!--  -->
+    <div style="display: none;" id="guess_GPA_main" >
+        <div style="margin: 0px 20px" class="hint_text">Put in your new GPA from the report, and how many subjects did you take this semester.</div>
+        <div class="guess_gpa_grid">
+            <div>New GPA</div>
+            <input onchange="calculate_guess_only()" autocomplete="off" id="new_gpa" class="input_field" type="text" placeholder="5.80 ?">
+            <div>New Subjects</div>
+            <input onchange="calculate_guess_only()" autocomplete="off" id="new_subject_input" class="input_field" type="text" placeholder="1/ 2/ 3/ 4">
+        </div>
+        <div onclick="calculate_guess_only()" id="guess_gpa_result" class="black_block">Possibilities:<br></div>
+
+    </div>
+    <div id="hint_text_div">
+        <div class="horizontal_divider"></div>
+        <div class="hint_text">* The weekend before GPAs are released, your GPA would update first on the "Online Student Record" pdf (via Onestopadmin > Results > "Email my academic record"), before the actual grade for each subjects are released.</div>
+        <div class="hint_text">* GPA 公布之前的周末，成绩单上的 GPA 平均分会比单独每门课的总分先更新。 </div>
+        <div class="hint_text">"Guess GPA" helps you calculate the marks of those subjects, before your grade releases. It only shows the possible combinations, there might be more than one possible combinations, but one of them would be your GPA this semester.</div>
+        <div class="hint_text">“Guess GPA” 可以通过新的 GPA 帮助你推算出，这个新的 GPA 是因为增加了哪些 GPA 得到的。虽然猜不出具体哪门课是哪个成绩，但他会把所有可能性列出来。</div>
+
+    </div>
+</body>
+</html>

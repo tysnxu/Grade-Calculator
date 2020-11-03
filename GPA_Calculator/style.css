@@ -1,0 +1,247 @@
+@font-face {
+    font-family: "NBInternationalBold";
+    src: url("fonts/nb_international_pro_bold-webfont.woff2") format('woff2');
+    font-style: bold;
+}
+
+@font-face {
+    font-family: "NBInternational";
+    src: url("fonts/nb_international_pro_regular-webfont.woff2") format('woff2');
+    font-style: normal;
+}
+
+body{
+    padding-left: 10%;
+    padding-right: 10%;
+    scroll-behavior: smooth;
+}
+
+#h1 {
+    justify-self: center;
+    font-family: NBInternationalBold;
+    font-size: 3em;
+    padding: 20px;
+    color: rgb(37, 37, 37);
+    margin-bottom: 20px;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr .5fr .5fr;
+    grid-gap: .6em;
+    grid-auto-rows: minmax(80px, auto);
+    padding: 20px;
+}
+
+#main_grid{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.wrapper > div {
+    padding: 1em;
+}
+
+
+.logo{
+    margin: 20px;
+    margin-top: 100px;
+    height: 50px;
+}
+
+
+.input_field{
+    align-content: start;
+    min-width: 100px;
+    font-family: NBInternational;
+    background: #eee;
+    font-size: 1.5em;
+    padding-left: 20px;
+    border: 0px;
+}
+
+.row_label{
+    align-content: stretch;
+    font-family: NBInternationalBold;
+    background: rgb(37, 37, 37);
+    color: #eee;
+    font-size: 1.5em;
+    padding-left: 20px;
+}
+
+.hint{
+    color:rgb(37, 37, 37);
+    justify-self: start;
+    align-self: end;
+    font-family: NBInternationalBold;
+    font-size: 1em;
+}
+
+.black_block{
+    margin: 20px;
+    background: rgb(37, 37, 37);
+    font-family: NBInternationalBold;
+    font-size: 2em;
+    color: #eee;
+    padding: 20px;
+}
+
+.button{
+    cursor: pointer;
+}
+
+.black_block_pressed{
+    margin: 20px;
+    background: white;
+    border: black 5px solid;
+    font-family: NBInternationalBold;
+    font-size: 2em;
+    color: rgb(37, 37, 37);
+    padding: 20px;
+}
+
+#total_sum{
+    margin: 20px;
+    background: rgb(37, 37, 37);
+    font-family: NBInternationalBold;
+    font-size: 2em;
+    color: #eee;
+    padding: 20px;
+}
+
+.add_row_div{
+    background: rgb(37, 37, 37);
+    font-family: NBInternationalBold;
+    font-size: 2em;
+    margin: 20px;
+    padding: 20px;
+    color: #eee;
+}
+
+.add_row_div:hover {
+    background: rgb(99, 99, 99);
+    cursor:pointer;
+}
+
+.constant_visual_chart > div:nth-child(even){
+    background: #eee;
+}
+
+.arrow_holder{
+    display: flex;
+    align-self: top;
+    justify-self: top;
+    background: rgb(37, 37, 37);
+    justify-content: center;
+    align-content: center;
+}
+
+.arrow_holder:hover{
+    background: rgb(110, 110, 110);
+}
+
+.arrow_holder:active{
+    background: rgb(146, 146, 146);
+}
+
+.guess_gpa_grid{
+    display: grid;
+    grid-template-columns: 1fr 0.75fr 1fr 0.75fr;
+    grid-gap: .6em;
+    margin-top: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.guess_gpa_grid > div {
+    padding: 1em;
+    font-family: NBInternational;
+    font-size: 1.5em;
+    background: rgb(37, 37, 37);
+    color: white;
+  
+}
+
+.arrow-up {
+    width: 0; 
+    height: 0; 
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid white;
+    margin-bottom: 20px;
+    margin-top: 15px;
+}
+  
+.arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid rgb(255, 255, 255);
+    margin-top: 15px;
+}
+
+.hint_text{
+    margin: 20px 20px;
+    font-family: NBInternational;
+    font-size: 1.5em;
+    line-height: 45px;
+}
+
+#hint_text_div{
+    margin-top: 40px;
+    margin-bottom: 80px;
+}
+
+.horizontal_divider{
+    background: black;
+    height: 2px;
+}
+
+
+@media (orientation: portrait), (max-width: 800px) {
+    body {
+        padding: 5px;
+    }
+
+    #main_grid{
+        padding: 0px;
+    }
+    
+    .add_row_div{
+        margin: 0px;
+        margin-top: 30px;
+    }
+    
+    #total_sum{
+        margin: 0px;
+        margin-top: 30px;
+    }
+
+    .black_block{
+        margin: 0px;
+        margin-top: 30px;
+    }
+
+    .black_block_pressed{
+        margin: 0px;
+        margin-top: 30px;
+    }
+
+    .logo{
+        margin: 20px;
+        margin-top: 200px;
+        height: 35px;
+    }
+
+    .guess_gpa_grid{
+       margin: 0px;
+       margin-top: 10px;
+    }
+
+    .hint_text{
+        margin: 30px 10px;
+    }
+
+
+}
