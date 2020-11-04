@@ -9,24 +9,45 @@
 </head>
 <body>
     <h1 id="h1">GPA Calculator</h1>
+    <div style="display: none;" id="scale_area" class="black_block">
+        <div class="scale_title">Change GPA Scale</div>
+        <div class="scale_title"> \ </div>
+        <div onclick="change_scale(true)" class="scale_title_button">Clear</div>
+
+        <div id="scale_label_grid">
+            <div class="scale_change_label">HD</div>
+            <div class="scale_change_label">D</div>
+            <div class="scale_change_label">C</div>
+            <div class="scale_change_label">P</div>
+            <div class="scale_change_label">F</div>
+        </div>
+        <div id="scale_grid">
+            <input onchange="change_scale(false)" class="scale_input_field" type="text" autocomplete="off" placeholder="7.0">
+            <input onchange="change_scale(false)" class="scale_input_field" type="text" autocomplete="off" placeholder="6.0">
+            <input onchange="change_scale(false)" class="scale_input_field" type="text" autocomplete="off" placeholder="5.0">
+            <input onchange="change_scale(false)" class="scale_input_field" type="text" autocomplete="off" placeholder="4.0">
+            <input onchange="change_scale(false)" class="scale_input_field" type="text" autocomplete="off" placeholder="0.0">
+        </div>
+    </div>
+
     <div id="main_grid" class="wrapper">
-        <div class="row_label">HD - 7</div>
+        <div onclick="trigger_scale_area()" class="row_label">HD - 7</div>
         <input onchange="CalculateAll()" id="HD_count" class="input_field" type="text" autocomplete="off" placeholder="×  how many">
         <div onclick="countAddSubtract('+', 0)" class="arrow_holder"><i class="arrow-up"></i></div>
         <div onclick="countAddSubtract('-', 0)" class="arrow_holder"><i class="arrow-down"></i></div>
-        <div class="row_label">D - 6</div>
+        <div onclick="trigger_scale_area()" class="row_label">D - 6</div>
         <input onchange="CalculateAll()" id="D_count" class="input_field" type="text" autocomplete="off" placeholder="×  how many">
         <div onclick="countAddSubtract('+', 1)" class="arrow_holder"><i class="arrow-up"></i></div>
         <div onclick="countAddSubtract('-', 1)" class="arrow_holder"><i class="arrow-down"></i></div>
-        <div class="row_label">C - 5</div>
+        <div onclick="trigger_scale_area()" class="row_label">C - 5</div>
         <input onchange="CalculateAll()" id="C_count" class="input_field" type="text" autocomplete="off" placeholder="×  how many">
         <div onclick="countAddSubtract('+', 2)" class="arrow_holder"><i class="arrow-up"></i></div>
         <div onclick="countAddSubtract('-', 2)" class="arrow_holder"><i class="arrow-down"></i></div>
-        <div class="row_label">P - 4</div>
+        <div onclick="trigger_scale_area()" class="row_label">P - 4</div>
         <input onchange="CalculateAll()" id="P_count" class="input_field" type="text" autocomplete="off" placeholder="×  how many">
         <div onclick="countAddSubtract('+', 3)" class="arrow_holder"><i class="arrow-up"></i></div>
         <div onclick="countAddSubtract('-', 3)" class="arrow_holder"><i class="arrow-down"></i></div>
-        <div class="row_label">F - 0</div>
+        <div onclick="trigger_scale_area()" class="row_label">F - 0</div>
         <input onchange="CalculateAll()" id="F_count" class="input_field" type="text" autocomplete="off" placeholder="×  how many">
         <div onclick="countAddSubtract('+', 4)" class="arrow_holder"><i class="arrow-up"></i></div>
         <div onclick="countAddSubtract('-', 4)" class="arrow_holder"><i class="arrow-down"></i></div>
