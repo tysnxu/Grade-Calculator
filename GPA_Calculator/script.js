@@ -1,287 +1,309 @@
-var gpa_marks_default = [7, 6, 5, 4, 0]
-var gpa_marks = gpa_marks_default
-var gpa_names = ["HD - ", "D - ", "C - ", "P - ", "F - "]
-// var gpa_marks = [4, 3.5, 2.5, 1.5, 0.5]
+@font-face {
+    font-family: "NBInternationalBold";
+    src: url("fonts/nb_international_pro_bold-webfont.woff2") format('woff2');
+    font-style: bold;
+}
 
-function trigger_scale_area() {
-    var scale_area = document.getElementById("scale_area");
-    if (scale_area.hasAttribute("style")) {
-        scale_area.removeAttribute("style")
-    } else {
-        scale_area.setAttribute("style", "display: none;")
-    }
+@font-face {
+    font-family: "NBInternational";
+    src: url("fonts/nb_international_pro_regular-webfont.woff2") format('woff2');
+    font-style: normal;
+}
+
+body{
+    padding: 0% 15%;
+    scroll-behavior: smooth;
+}
+
+#h1 {
+    justify-self: center;
+    font-family: NBInternationalBold;
+    font-size: 3em;
+    padding: 20px;
+    color: rgb(37, 37, 37);
+    margin-bottom: 20px;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr .5fr .5fr;
+    grid-gap: .6em;
+    grid-auto-rows: minmax(80px, auto);
+    padding: 20px;
+}
+
+#scale_grid{    
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: 15px;
+}
+
+#scale_label_grid{    
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: 15px;
+    padding: 0px;
+    padding: 20px 0px 10px 0px;
+}
+
+.scale_title {
+    display: inline-block;
+}
+
+.scale_title_button {
+    color: rgb(137, 137, 137);
+    display: inline-block;
+    cursor: pointer;
+}
+
+.scale_title_button:hover {
+    color: rgb(238, 238, 238);
 }
 
 
-function change_scale(clear) {
-    var all_scale_input = document.getElementById("scale_grid").getElementsByClassName("scale_input_field");
-
-    if (clear) {
-        scale_input = gpa_marks_default;
-        for (i=0;i<all_scale_input.length;i++) {
-            all_scale_input[i].value = ""
-            document.getElementById("main_grid").getElementsByClassName("row_label")[i].removeAttribute("scale-rep")
-        }
-    } else {
-        var scale_input = [];
-        for (i=0;i<all_scale_input.length;i++) {
-            current_value = all_scale_input[i].value
-            scale_input.push(current_value)
-        }
-    }
-
-    for (i=0;i<scale_input.length;i++) {
-        var current_value = scale_input[i]
-        if (current_value == "") {
-            current_value = gpa_marks_default[i]
-        }
-        current_value = Number(current_value)
-        scale_input[i] = current_value
-        document.getElementById("main_grid").getElementsByClassName("row_label")[i].innerText = gpa_names[i] + current_value
-        document.getElementById("main_grid").getElementsByClassName("row_label")[i].setAttribute("scale-rep", current_value)
-    }
-    CalculateAll()
+.scale_change_label{
+    justify-content: start;
+    font-family: NBInternationalBold;
+    background: rgb(37, 37, 37);
+    color: #eee;
+    font-size: 0.75em;
 }
 
-function fetch_all_scale() {
-    scale_fetched = []
-    all_rep = document.getElementById("main_grid").getElementsByClassName("row_label");
-    for (i=0;i<all_rep.length;i++) {
-        if (all_rep[i].hasAttribute("scale-rep")) {
-            scale_fetched.push(all_rep[i].getAttribute("scale-rep"))
-        } else {
-            scale_fetched.push(gpa_marks_default[i])
-        }
-}
-    return scale_fetched
+#main_grid{
+    padding-top: 20px;
+    padding-bottom: 0px;
 }
 
-function CalculateAll() {
-    // get all numbers
-    var gpa_marks = fetch_all_scale()
-    all_subjects = document.getElementsByClassName("input_field")
-    total_subjects = 0
-    sum_gpa = 0
-    for (i=0; i<5; i++) {
-        if (document.getElementById("main_grid").getElementsByClassName("input_field")[i].value != "") {
-            total_subjects += parseInt(document.getElementById("main_grid").getElementsByClassName("input_field")[i].value)
-            sum_gpa += document.getElementById("main_grid").getElementsByClassName("input_field")[i].value * gpa_marks[i]
-        }
-    }
-    if (total_subjects == 0) {
-        document.getElementById("total_sum").innerText = "GPA: " + 0 + " | Subjects: " + total_subjects
-    } else {
-        document.getElementById("total_sum").innerText = "GPA: " + (sum_gpa/total_subjects).toFixed(2) + " | Subjects: " + total_subjects
-        document.getElementById("total_sum").setAttribute("sum_gpa", (sum_gpa))
-        document.getElementById("total_sum").setAttribute("total_subjects", total_subjects)
-    }
-    calculate_guess_only()
+.wrapper > div {
+    padding: 1em;
 }
 
-function countAddSubtract(operation, row) {
-    current_cell = document.getElementById("main_grid").getElementsByClassName("input_field")[row].value
-    if (current_cell == "") {
-        document.getElementById("main_grid").getElementsByClassName("input_field")[row].value = 0}
+
+.logo{
+    margin: 20px;
+    height: 50px;
+}
+
+.scale_input_field{
+    align-content: start;
+    min-width: 25%;
+    font-family: NBInternational;
+    background: #eee;
+    color: rgb(62, 62, 62);
+    font-size: 1.5em;
+    padding: 5px 10px;
+    border: 0px;
+}
+
+.input_field{
+    align-content: start;
+    min-width: 100px;
+    font-family: NBInternational;
+    background: #eee;
+    font-size: 1.5em;
+    padding-left: 20px;
+    border: 0px;
+}
+
+.row_label{
+    align-content: stretch;
+    font-family: NBInternationalBold;
+    background: rgb(37, 37, 37);
+    color: #eee;
+    font-size: 1.5em;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+.row_label:hover {
+    background: rgb(99, 99, 99);
+}
+
+
+.hint{
+    color:rgb(37, 37, 37);
+    justify-self: start;
+    align-self: end;
+    font-family: NBInternationalBold;
+    font-size: 1em;
+}
+
+.black_block{
+    margin: 20px;
+    background: rgb(37, 37, 37);
+    font-family: NBInternationalBold;
+    font-size: 2em;
+    color: #eee;
+    padding: 20px;
+}
+
+.button{
+    cursor: pointer;
+}
+
+.button:hover{
+    background: rgb(99, 99, 99);
+}
+
+.black_block_pressed{
+    margin: 20px;
+    background: white;
+    border: black 5px solid;
+    font-family: NBInternationalBold;
+    font-size: 2em;
+    color: rgb(37, 37, 37);
+    padding: 20px;
+}
+
+#total_sum{
+    margin: 20px;
+    background: rgb(37, 37, 37);
+    font-family: NBInternationalBold;
+    font-size: 2em;
+    color: #eee;
+    padding: 20px;
+    cursor: pointer;
+}
+
+#total_sum:hover{
+    background: rgb(99, 99, 99);
+
+}
+
+.add_row_div{
+    background: rgb(37, 37, 37);
+    font-family: NBInternationalBold;
+    font-size: 2em;
+    margin: 20px;
+    padding: 20px;
+    color: #eee;
+}
+
+.add_row_div:hover {
+    background: rgb(99, 99, 99);
+    cursor:pointer;
+}
+
+.constant_visual_chart > div:nth-child(even){
+    background: #eee;
+}
+
+.arrow_holder{
+    display: flex;
+    align-self: top;
+    justify-self: top;
+    background: rgb(37, 37, 37);
+    justify-content: center;
+    align-content: center;
+    cursor: pointer;
+}
+
+.arrow_holder:hover{
+    background: rgb(110, 110, 110);
+}
+
+.arrow_holder:active{
+    background: rgb(146, 146, 146);
+}
+
+.guess_gpa_grid{
+    display: grid;
+    grid-template-columns: 1fr 0.75fr 1fr 0.75fr;
+    grid-gap: .6em;
+    margin-top: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.guess_gpa_grid > div {
+    padding: 1em;
+    font-family: NBInternational;
+    font-size: 1.5em;
+    background: rgb(37, 37, 37);
+    color: white;
+  
+}
+
+.arrow-up {
+    width: 0; 
+    height: 0; 
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid white;
+    margin-bottom: 20px;
+    margin-top: 15px;
+}
+  
+.arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid rgb(255, 255, 255);
+    margin-top: 15px;
+}
+
+.hint_text{
+    margin: 20px 20px;
+    font-family: NBInternational;
+    font-size: 1.1em;
+    line-height: 45px;
+}
+
+#hint_text_div{
+    margin-top: 40px;
+    margin-bottom: 80px;
+}
+
+.horizontal_divider{
+    background: black;
+    height: 2px;
+}
+
+
+@media (orientation: portrait), (max-width: 800px) {
+    body {
+        padding: 5px;
+    }
+
+    #main_grid{
+        padding: 20px 0px;
+    }
     
-    if (operation == "+") {
-        document.getElementById("main_grid").getElementsByClassName("input_field")[row].value = parseInt(document.getElementById("main_grid").getElementsByClassName("input_field")[row].value) + 1
-    } else if (operation == "-") {
-        if (document.getElementById("main_grid").getElementsByClassName("input_field")[row].value != 0) {
-            document.getElementById("main_grid").getElementsByClassName("input_field")[row].value = parseInt(document.getElementById("main_grid").getElementsByClassName("input_field")[row].value) - 1
-        }
+    .add_row_div{
+        margin: 0px;
+        margin-top: 30px;
     }
-    CalculateAll()
-}
-
-function triggerGuessGPA() {
-    current_style = document.getElementById("guess-gpa-trigger").getAttribute("class")
-    if (current_style == "black_block button") {
-        // trigger
-        document.getElementById("guess-gpa-trigger").setAttribute("class", "black_block_pressed button")
-        // document.getElementById("hint_text_div").setAttribute("style", "display: none")
-        document.getElementById("hint_text_div").setAttribute("style", "color: lightgrey")
-
-        // update Placeholder
-        current_gpa = document.getElementById("total_sum").getAttribute("sum_gpa")
-        total_subjects = document.getElementById("total_sum").getAttribute("total_subjects")
-        if (total_subjects == null) {
-            document.getElementById("guess-gpa-trigger").innerText = "Guess GPA (Fill the chart above first.)"
-        } else {            
-            document.getElementById("guess-gpa-trigger").innerText = "Guess GPA"
-            hint_subjects = 3
-            placeholder_hint = ((parseInt(current_gpa) + 21)/(parseInt(total_subjects)+parseInt(hint_subjects))).toFixed(2)
-            document.getElementById("guess_GPA_main").getElementsByClassName("input_field")[0].setAttribute("placeholder", placeholder_hint)
-        }
-        calculate_guess_only()
-
-        document.getElementById("guess_GPA_main").setAttribute("style", "display: grid")
-    } else if (current_style == "black_block_pressed button") {
-        document.getElementById("hint_text_div").removeAttribute("style")
-        // Deactivate
-        document.getElementById("guess-gpa-trigger").setAttribute("class", "black_block button")
-        document.getElementById("guess_GPA_main").setAttribute("style", "display: none")
-    }
-}
-
-function calculate_guess_only() {
-    var gpa_marks = fetch_all_scale()
-    if (document.getElementById("new_subject_input").value != "" && document.getElementById("new_gpa").value != "") {
-
-        // get new total gpa, average it, if equal new gpa, return it
-        var new_subject = document.getElementById("new_subject_input").value;
-        var new_total_subject = parseInt(new_subject) + parseInt(total_subjects)
-        var new_gpa = document.getElementById("new_gpa").value
-        var old_total_gpa = document.getElementById("total_sum").getAttribute("sum_gpa")
-
-        // console.log("Subjects Added")
-        // console.log(new_subject)
-        // console.log("New Total Subjects")
-        // console.log(new_total_subject)
-        // console.log("Target GPA")
-        // console.log(new_gpa)
-        // console.log("Old Total GPA")
-        // console.log(old_total_gpa)
-
-        guessed_results = guessGPA(new_gpa, new_subject, new_total_subject, old_total_gpa)
-
-        // console.log(guessed_results)
-        document.getElementById("guess_gpa_result").innerHTML = "Possibilities: <br>"
-        counter = 1
     
-        if (guessed_results.length == 0) {
-            document.getElementById("guess_gpa_result").innerHTML += "<br>";
-            document.getElementById("guess_gpa_result").innerHTML += "( Can't think of anything. )";
-            document.getElementById("guess_gpa_result").innerHTML += "<br>";
-            document.getElementById("guess_gpa_result").innerHTML += "( Please double check. )";
-        }
-
-
-        for (i=0;i<guessed_results.length;i++) {
-            current_comb = guessed_results[i];
-            // console.log(current_comb);
-            // console.log(current_comb.toString().length);
-
-            if (current_comb.toString().length != 1) {
-                current_comb = current_comb.split(gpa_marks[0]).join("HD");
-                current_comb = current_comb.split(gpa_marks[1]).join("D");
-                current_comb = current_comb.split(gpa_marks[2]).join("C");
-                current_comb = current_comb.split(gpa_marks[3]).join("P");
-                current_comb = current_comb.split(gpa_marks[4]).join("F");
-                current_comb = current_comb.split(",").join(" + ");
-            } else {
-                current_comb = current_comb.toString().replace(gpa_marks[0], "HD");
-                current_comb = current_comb.replace(gpa_marks[1], "D");
-                current_comb = current_comb.replace(gpa_marks[2], "C");
-                current_comb = current_comb.replace(gpa_marks[3], "P");
-                current_comb = current_comb.replace(gpa_marks[4], "F");
-            }
-            
-            // console.log(current_comb);
-
-            document.getElementById("guess_gpa_result").innerHTML += "<br>";
-            document.getElementById("guess_gpa_result").innerHTML += counter;
-            document.getElementById("guess_gpa_result").innerHTML += ". ";
-            document.getElementById("guess_gpa_result").innerHTML += current_comb;
-            counter += 1;
-        }
+    #total_sum{
+        margin: 0px;
+        margin-top: 30px;
     }
-}
 
-function guessGPA(target_gpa, new_sub, new_total_subject, old_total_gpa) {
-    var tried_combinations = []
-    var success_combinations = []
-    var gpa_marks = fetch_all_scale()
-
-    if (new_sub == 1) {
-        for (a=0;a<gpa_marks.length;a++) {
-            n1 = gpa_marks[a]
-            
-            if (! tried_combinations.includes(n1)) {
-                tried_combinations.push(n1)
-
-                current_gpa = ((parseFloat(old_total_gpa) + parseFloat(n1)) / new_total_subject).toFixed(2)
-                current_gpa = Number(current_gpa)
-
-                if (current_gpa == target_gpa) {
-                        // console.log(n1);
-                        success_combinations.push(n1)
-                }
-            }
-        }
-    } else if (new_sub == 2) {
-        for (a=0;a<gpa_marks.length;a++) {
-            for (b=0;b<gpa_marks.length;b++) {
-                n1 = gpa_marks[a]
-                n2 = gpa_marks[b]
-                current_combination = [n1, n2].sort((a,b)=>a-b)                
-                current_combination = current_combination.join()
-
-                if (! tried_combinations.includes(current_combination)) {
-                    tried_combinations.push(current_combination)
-                    // console.log(current_combination)
-
-                    current_gpa = ((parseFloat(old_total_gpa) + parseFloat(n1) + parseFloat(n2)) / new_total_subject).toFixed(2)
-                    current_gpa = Number(current_gpa)
-
-                    if (current_gpa == target_gpa) {
-                        success_combinations.push(current_combination)
-                    }
-                }
-            }
-        }
-    } else if (new_sub == 3){        
-        for (a=0;a<gpa_marks.length;a++) {
-            for (b=0;b<gpa_marks.length;b++) {
-                for (c=0;c<gpa_marks.length;c++) {
-                    n1 = gpa_marks[a]
-                    n2 = gpa_marks[b]
-                    n3 = gpa_marks[c]
-                    current_combination = [n1, n2, n3].sort((a,b)=>a-b)
-                    current_combination = current_combination.join()
-
-                    if (! tried_combinations.includes(current_combination)) {
-                        tried_combinations.push(current_combination)
-
-                        // console.log(current_combination);
-                        current_gpa = ((parseFloat(old_total_gpa) + parseFloat(n1) + parseFloat(n2) + parseFloat(n3)) / new_total_subject).toFixed(2)
-                        current_gpa = Number(current_gpa)
-
-
-                        if (current_gpa == target_gpa) {
-                            success_combinations.push(current_combination)
-                    }
-                }
-            }
-        }
+    .black_block{
+        margin: 0px;
+        margin-top: 30px;
     }
-        
-    } else if (new_sub == 4){        
-        for (a=0;a<gpa_marks.length;a++) {
-            for (b=0;b<gpa_marks.length;b++) {
-                for (c=0;c<gpa_marks.length;c++) {
-                    for (d=0;d<gpa_marks.length;d++) {
-                    n1 = gpa_marks[a]
-                    n2 = gpa_marks[b]
-                    n3 = gpa_marks[c]
-                    n4 = gpa_marks[d]
-                    current_combination = [n1, n2, n3, n4].sort((a,b)=>a-b)
-                    current_combination = current_combination.join()
 
-                    if (! tried_combinations.includes(current_combination)) {
-                        tried_combinations.push(current_combination)
-                        // console.log(current_combination);
-                        current_gpa = ((parseFloat(old_total_gpa) + parseFloat(n1) + parseFloat(n2) + parseFloat(n3) + parseFloat(n4)) / new_total_subject).toFixed(2)
-                        current_gpa = Number(current_gpa)
+    .black_block_pressed{
+        margin: 0px;
+        margin-top: 30px;
+    }
 
-                        if (current_gpa == target_gpa) {
-                            success_combinations.push(current_combination)
-                    }
-                }
-            }
-        }
+    .logo{
+        margin-left: 5px;
+        margin-top: -50px;
+        height: 35px;
     }
-}
-        
+
+    .guess_gpa_grid{
+       margin: 0px;
+       margin-top: 10px;
     }
-    return success_combinations
+
+    .hint_text{
+        margin: 30px 10px;
+    }
+
+
 }
