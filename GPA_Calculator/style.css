@@ -11,8 +11,7 @@
 }
 
 body{
-    padding-left: 10%;
-    padding-right: 10%;
+    padding: 0% 15%;
     scroll-behavior: smooth;
 }
 
@@ -33,8 +32,45 @@ body{
     padding: 20px;
 }
 
+#scale_grid{    
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: 15px;
+}
+
+#scale_label_grid{    
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: 15px;
+    padding: 0px;
+    padding: 20px 0px 10px 0px;
+}
+
+.scale_title {
+    display: inline-block;
+}
+
+.scale_title_button {
+    color: rgb(137, 137, 137);
+    display: inline-block;
+    cursor: pointer;
+}
+
+.scale_title_button:hover {
+    color: rgb(238, 238, 238);
+}
+
+
+.scale_change_label{
+    justify-content: start;
+    font-family: NBInternationalBold;
+    background: rgb(37, 37, 37);
+    color: #eee;
+    font-size: 0.75em;
+}
+
 #main_grid{
-    padding-top: 0px;
+    padding-top: 20px;
     padding-bottom: 0px;
 }
 
@@ -49,6 +85,16 @@ body{
     height: 50px;
 }
 
+.scale_input_field{
+    align-content: start;
+    min-width: 25%;
+    font-family: NBInternational;
+    background: #eee;
+    color: rgb(62, 62, 62);
+    font-size: 1.5em;
+    padding: 5px 10px;
+    border: 0px;
+}
 
 .input_field{
     align-content: start;
@@ -68,6 +114,11 @@ body{
     font-size: 1.5em;
     padding-left: 20px;
 }
+
+.row_label:hover {
+    background: rgb(99, 99, 99);
+}
+
 
 .hint{
     color:rgb(37, 37, 37);
@@ -90,6 +141,7 @@ body{
     cursor: pointer;
 }
 
+
 .black_block_pressed{
     margin: 20px;
     background: white;
@@ -107,6 +159,12 @@ body{
     font-size: 2em;
     color: #eee;
     padding: 20px;
+    cursor: pointer;
+}
+
+#total_sum:hover{
+    background: rgb(99, 99, 99);
+
 }
 
 .add_row_div{
@@ -206,7 +264,7 @@ body{
     }
 
     #main_grid{
-        padding: 0px;
+        padding: 20px 0px;
     }
     
     .add_row_div{
