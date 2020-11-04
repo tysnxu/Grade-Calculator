@@ -81,7 +81,6 @@ body{
 
 .logo{
     margin: 20px;
-    margin-top: 100px;
     height: 50px;
 }
 
@@ -113,6 +112,7 @@ body{
     color: #eee;
     font-size: 1.5em;
     padding-left: 20px;
+    cursor: pointer;
 }
 
 .row_label:hover {
@@ -141,6 +141,9 @@ body{
     cursor: pointer;
 }
 
+.button:hover{
+    background: rgb(99, 99, 99);
+}
 
 .black_block_pressed{
     margin: 20px;
@@ -243,7 +246,7 @@ body{
 .hint_text{
     margin: 20px 20px;
     font-family: NBInternational;
-    font-size: 1.5em;
+    font-size: 1.1em;
     line-height: 45px;
 }
 
@@ -288,8 +291,8 @@ body{
     }
 
     .logo{
-        margin: 20px;
-        margin-top: 200px;
+        margin-left: 5px;
+        margin-top: -50px;
         height: 35px;
     }
 
