@@ -1,22 +1,71 @@
-var gpa_marks = [7, 6, 5, 4, 0]
+var gpa_marks_default = [7, 6, 5, 4, 0]
+var gpa_marks = gpa_marks_default
+var gpa_names = ["HD - ", "D - ", "C - ", "P - ", "F - "]
 // var gpa_marks = [4, 3.5, 2.5, 1.5, 0.5]
 
+function trigger_scale_area() {
+    var scale_area = document.getElementById("scale_area");
+    if (scale_area.hasAttribute("style")) {
+        scale_area.removeAttribute("style")
+    } else {
+        scale_area.setAttribute("style", "display: none;")
+    }
+}
+
+
+function change_scale(clear) {
+    var all_scale_input = document.getElementById("scale_grid").getElementsByClassName("scale_input_field");
+
+    if (clear) {
+        scale_input = gpa_marks_default;
+        for (i=0;i<all_scale_input.length;i++) {
+            all_scale_input[i].value = ""
+            document.getElementById("main_grid").getElementsByClassName("row_label")[i].removeAttribute("scale-rep")
+        }
+    } else {
+        var scale_input = [];
+        for (i=0;i<all_scale_input.length;i++) {
+            current_value = all_scale_input[i].value
+            scale_input.push(current_value)
+        }
+    }
+
+    for (i=0;i<scale_input.length;i++) {
+        var current_value = scale_input[i]
+        if (current_value == "") {
+            current_value = gpa_marks_default[i]
+        }
+        current_value = Number(current_value)
+        scale_input[i] = current_value
+        document.getElementById("main_grid").getElementsByClassName("row_label")[i].innerText = gpa_names[i] + current_value
+        document.getElementById("main_grid").getElementsByClassName("row_label")[i].setAttribute("scale-rep", current_value)
+    }
+    CalculateAll()
+}
+
+function fetch_all_scale() {
+    scale_fetched = []
+    all_rep = document.getElementById("main_grid").getElementsByClassName("row_label");
+    for (i=0;i<all_rep.length;i++) {
+        if (all_rep[i].hasAttribute("scale-rep")) {
+            scale_fetched.push(all_rep[i].getAttribute("scale-rep"))
+        } else {
+            scale_fetched.push(gpa_marks_default[i])
+        }
+}
+    return scale_fetched
+}
+
 function CalculateAll() {
+    // get all numbers
+    var gpa_marks = fetch_all_scale()
     all_subjects = document.getElementsByClassName("input_field")
     total_subjects = 0
     sum_gpa = 0
     for (i=0; i<5; i++) {
-        if (document.getElementsByClassName("input_field")[i].value != "") {
-            total_subjects += parseInt(document.getElementsByClassName("input_field")[i].value)
-            if (i == 0) {
-                sum_gpa += document.getElementsByClassName("input_field")[i].value * gpa_marks[0]
-            } else if (i == 1) {
-                sum_gpa += document.getElementsByClassName("input_field")[i].value * gpa_marks[1]
-            }  else if (i == 2) {
-                sum_gpa += document.getElementsByClassName("input_field")[i].value * gpa_marks[2]
-            }  else if (i == 3) {
-                sum_gpa += document.getElementsByClassName("input_field")[i].value * gpa_marks[3]
-            }
+        if (document.getElementById("main_grid").getElementsByClassName("input_field")[i].value != "") {
+            total_subjects += parseInt(document.getElementById("main_grid").getElementsByClassName("input_field")[i].value)
+            sum_gpa += document.getElementById("main_grid").getElementsByClassName("input_field")[i].value * gpa_marks[i]
         }
     }
     if (total_subjects == 0) {
@@ -30,15 +79,15 @@ function CalculateAll() {
 }
 
 function countAddSubtract(operation, row) {
-    current_cell = document.getElementsByClassName("input_field")[row].value
+    current_cell = document.getElementById("main_grid").getElementsByClassName("input_field")[row].value
     if (current_cell == "") {
-        document.getElementsByClassName("input_field")[row].value = 0}
+        document.getElementById("main_grid").getElementsByClassName("input_field")[row].value = 0}
     
     if (operation == "+") {
-        document.getElementsByClassName("input_field")[row].value = parseInt(document.getElementsByClassName("input_field")[row].value) + 1
+        document.getElementById("main_grid").getElementsByClassName("input_field")[row].value = parseInt(document.getElementById("main_grid").getElementsByClassName("input_field")[row].value) + 1
     } else if (operation == "-") {
-        if (document.getElementsByClassName("input_field")[row].value != 0) {
-            document.getElementsByClassName("input_field")[row].value = parseInt(document.getElementsByClassName("input_field")[row].value) - 1
+        if (document.getElementById("main_grid").getElementsByClassName("input_field")[row].value != 0) {
+            document.getElementById("main_grid").getElementsByClassName("input_field")[row].value = parseInt(document.getElementById("main_grid").getElementsByClassName("input_field")[row].value) - 1
         }
     }
     CalculateAll()
@@ -75,14 +124,27 @@ function triggerGuessGPA() {
 }
 
 function calculate_guess_only() {
+    var gpa_marks = fetch_all_scale()
     if (document.getElementById("new_subject_input").value != "" && document.getElementById("new_gpa").value != "") {
 
-        new_subject = document.getElementById("new_subject_input").value
-        new_gpa = document.getElementById("new_gpa").value
-        gpa_gap = (new_gpa * (parseInt(new_subject) + parseFloat(total_subjects)) - parseInt(document.getElementById("total_sum").getAttribute("sum_gpa"))).toFixed(0)
-        guessed_results = guessGPA(gpa_gap, new_subject)
+        // get new total gpa, average it, if equal new gpa, return it
+        var new_subject = document.getElementById("new_subject_input").value;
+        var new_total_subject = parseInt(new_subject) + parseInt(total_subjects)
+        var new_gpa = document.getElementById("new_gpa").value
+        var old_total_gpa = document.getElementById("total_sum").getAttribute("sum_gpa")
 
-        console.log(gpa_gap)
+        // console.log("Subjects Added")
+        // console.log(new_subject)
+        // console.log("New Total Subjects")
+        // console.log(new_total_subject)
+        // console.log("Target GPA")
+        // console.log(new_gpa)
+        // console.log("Old Total GPA")
+        // console.log(old_total_gpa)
+
+        guessed_results = guessGPA(new_gpa, new_subject, new_total_subject, old_total_gpa)
+
+        // console.log(guessed_results)
         document.getElementById("guess_gpa_result").innerHTML = "Possibilities: <br>"
         counter = 1
     
@@ -97,21 +159,21 @@ function calculate_guess_only() {
         for (i=0;i<guessed_results.length;i++) {
             current_comb = guessed_results[i];
             // console.log(current_comb);
-            console.log(current_comb.toString().length);
+            // console.log(current_comb.toString().length);
 
             if (current_comb.toString().length != 1) {
-                current_comb = current_comb.split("7").join("HD");
-                current_comb = current_comb.split("6").join("D");
-                current_comb = current_comb.split("5").join("C");
-                current_comb = current_comb.split("4").join("P");
-                current_comb = current_comb.split("0").join("F");
+                current_comb = current_comb.split(gpa_marks[0]).join("HD");
+                current_comb = current_comb.split(gpa_marks[1]).join("D");
+                current_comb = current_comb.split(gpa_marks[2]).join("C");
+                current_comb = current_comb.split(gpa_marks[3]).join("P");
+                current_comb = current_comb.split(gpa_marks[4]).join("F");
                 current_comb = current_comb.split(",").join(" + ");
             } else {
-                current_comb = current_comb.toString().replace("7", "HD");
-                current_comb = current_comb.replace("6", "D");
-                current_comb = current_comb.replace("5", "C");
-                current_comb = current_comb.replace("4", "P");
-                current_comb = current_comb.replace("0", "F");
+                current_comb = current_comb.toString().replace(gpa_marks[0], "HD");
+                current_comb = current_comb.replace(gpa_marks[1], "D");
+                current_comb = current_comb.replace(gpa_marks[2], "C");
+                current_comb = current_comb.replace(gpa_marks[3], "P");
+                current_comb = current_comb.replace(gpa_marks[4], "F");
             }
             
             // console.log(current_comb);
@@ -122,29 +184,31 @@ function calculate_guess_only() {
             document.getElementById("guess_gpa_result").innerHTML += current_comb;
             counter += 1;
         }
-
     }
-
 }
 
-function guessGPA(mark_gap, subjects_count) {
+function guessGPA(target_gpa, new_sub, new_total_subject, old_total_gpa) {
     var tried_combinations = []
     var success_combinations = []
+    var gpa_marks = fetch_all_scale()
 
-    if (subjects_count == 1) {
+    if (new_sub == 1) {
         for (a=0;a<gpa_marks.length;a++) {
             n1 = gpa_marks[a]
             
             if (! tried_combinations.includes(n1)) {
                 tried_combinations.push(n1)
 
-                if (n1 == mark_gap) {
-                    console.log(n1)
-                    success_combinations.push(n1)
+                current_gpa = ((parseFloat(old_total_gpa) + parseFloat(n1)) / new_total_subject).toFixed(2)
+                current_gpa = Number(current_gpa)
+
+                if (current_gpa == target_gpa) {
+                        // console.log(n1);
+                        success_combinations.push(n1)
                 }
             }
         }
-    } else if (subjects_count == 2) {
+    } else if (new_sub == 2) {
         for (a=0;a<gpa_marks.length;a++) {
             for (b=0;b<gpa_marks.length;b++) {
                 n1 = gpa_marks[a]
@@ -154,15 +218,18 @@ function guessGPA(mark_gap, subjects_count) {
 
                 if (! tried_combinations.includes(current_combination)) {
                     tried_combinations.push(current_combination)
+                    // console.log(current_combination)
 
-                    if (n1 + n2 == mark_gap) {
-                        console.log(n1 + "  + " + n2)
+                    current_gpa = ((parseFloat(old_total_gpa) + parseFloat(n1) + parseFloat(n2)) / new_total_subject).toFixed(2)
+                    current_gpa = Number(current_gpa)
+
+                    if (current_gpa == target_gpa) {
                         success_combinations.push(current_combination)
                     }
                 }
             }
         }
-    } else if (subjects_count == 3){        
+    } else if (new_sub == 3){        
         for (a=0;a<gpa_marks.length;a++) {
             for (b=0;b<gpa_marks.length;b++) {
                 for (c=0;c<gpa_marks.length;c++) {
@@ -175,8 +242,12 @@ function guessGPA(mark_gap, subjects_count) {
                     if (! tried_combinations.includes(current_combination)) {
                         tried_combinations.push(current_combination)
 
-                        if (n1 + n2 + n3 == mark_gap) {
-                            console.log(n1 + "  + " + n2 + " + " + n3)
+                        // console.log(current_combination);
+                        current_gpa = ((parseFloat(old_total_gpa) + parseFloat(n1) + parseFloat(n2) + parseFloat(n3)) / new_total_subject).toFixed(2)
+                        current_gpa = Number(current_gpa)
+
+
+                        if (current_gpa == target_gpa) {
                             success_combinations.push(current_combination)
                     }
                 }
@@ -184,7 +255,7 @@ function guessGPA(mark_gap, subjects_count) {
         }
     }
         
-    } else if (subjects_count == 4){        
+    } else if (new_sub == 4){        
         for (a=0;a<gpa_marks.length;a++) {
             for (b=0;b<gpa_marks.length;b++) {
                 for (c=0;c<gpa_marks.length;c++) {
@@ -198,9 +269,11 @@ function guessGPA(mark_gap, subjects_count) {
 
                     if (! tried_combinations.includes(current_combination)) {
                         tried_combinations.push(current_combination)
+                        // console.log(current_combination);
+                        current_gpa = ((parseFloat(old_total_gpa) + parseFloat(n1) + parseFloat(n2) + parseFloat(n3) + parseFloat(n4)) / new_total_subject).toFixed(2)
+                        current_gpa = Number(current_gpa)
 
-                        if (n1 + n2 + n3 + n4 == mark_gap) {
-                            console.log(n1 + "  + " + n2 + " + " + n3 + " + " + n4)
+                        if (current_gpa == target_gpa) {
                             success_combinations.push(current_combination)
                     }
                 }
